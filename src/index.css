@@ -851,6 +851,13 @@ hr {
   height: 100%;
 }
 
+.room-list{
+  display: flex;
+  flex-direction: row;
+  /* flex-wrap: wrap; */
+  
+}
+
 @media screen and (max-width: 600px) {
   .bedroom-image {
     width: 80%;

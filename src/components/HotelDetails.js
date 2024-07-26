@@ -51,20 +51,26 @@ const HotelDetails = () => {
         const roomsResponse = await fetch(
           `${config.API_BASE_URL}/api/hotel/${slug}/rooms`
         );
+
         if (!roomsResponse.ok) {
           throw new Error(`HTTP error! status: ${roomsResponse.status}`);
         }
+
         const roomsData = await roomsResponse.json();
+
         roomsData.forEach((room) => {
           room.room_image = `${config.API_BASE_URL}${room.room_image}`;
         });
+
         setRooms(roomsData);
-        console.log("roomData =", roomsData);
+        console.log("roomData =",rooms);
+
       } catch (error) {
         console.error("Error fetching hotel data:", error);
       } finally {
         setLoading(false);
       }
+
     };
 
     fetchHotelData();
@@ -84,6 +90,7 @@ const HotelDetails = () => {
       {/* <Navbar /> */}
       <EnhancedNavbar />
       <ImageGallery images={hotel.images} />
+
       <div className="content-wrapper">
         {/* <LeftColumn /> */}
         <div className="left-column">
@@ -95,7 +102,7 @@ const HotelDetails = () => {
           <hr />
           <Description />
           <hr />
-          <SleepingArrangement />
+          <SleepingArrangement rooms={rooms}/>
           <hr />
           <Amenities />
           <hr />
@@ -103,6 +110,7 @@ const HotelDetails = () => {
         </div>
         <RightColumn />
       </div>
+
       <ReviewAndLocation />
       <MeetHost />
       <Footer />
