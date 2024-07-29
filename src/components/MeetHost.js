@@ -53,7 +53,7 @@ function MeetHost({host_name,host_image}) {
         <hr className="superHost_hr" />
 
         <div className="other-info">
-          <h3>Fernando is a Superhost</h3>
+          <h3>{host_name} is a Superhost</h3>
           <p>
             Superhosts are experienced, highly rated hosts who are committed to
             providing great stays for guests.
