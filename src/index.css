@@ -1205,7 +1205,7 @@ select {
 
 @media screen and (max-width: 768px) {
   .host-card-left h3 {
-    font-size: 1.5rem;
+    font-size: 1rem;
   }
 
   .host-card-right b {
