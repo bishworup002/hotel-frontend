@@ -74,7 +74,7 @@ To run the Hotel Booking Frontend, use the following command:
 npm start
 ```
 
-This runs the app in development mode. Open [http://localhost:3000/hotel/seaside-villa](http://localhost:3000/hotel/:slug) to view it in the browser.
+This runs the app in development mode. Open [http://localhost:3000/hotel/:slug](http://localhost:3000/hotel/seaside-villa) to view it in the browser.
 
 ## Connecting to the Backend
 
