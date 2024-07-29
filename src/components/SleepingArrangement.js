@@ -29,19 +29,10 @@ const SleepingArrangement = ({ rooms }) => {
     <section className="sleeping-arrangement">
       <h2>Where you'll sleep</h2>
       <div className="room-grid">
-        {rooms.slice(0, 4).map((room) => (
+        {rooms.map((room) => (
           <RoomCard key={room.id} room={room} />
         ))}
       </div>
-      {/* {rooms.length > 4 && (
-        <div className="scroll-container">
-          <div ref={scrollRef} className="scroll-wrapper scrollbar-hide">
-            {rooms.slice(4).map((room) => (
-              <RoomCard key={room.id} room={room} />
-            ))}
-          </div>
-        </div>
-      )} */}
     </section>
   );
 };
