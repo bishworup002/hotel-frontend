@@ -19,7 +19,7 @@ import love from "./image/love.png";
 
 
 function ImageGallery({hotel}) {
-  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 600);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 768);
   const [isSaved, setIsSaved] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
@@ -43,7 +43,7 @@ function ImageGallery({hotel}) {
     setIsSaved(savedState);
 
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth <= 600);
+      setIsSmallScreen(window.innerWidth <= 768);
     };
 
     window.addEventListener("resize", handleResize);
