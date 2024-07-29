@@ -105,7 +105,7 @@ const HotelDetails = () => {
           <hr />
           <CheckInInfo host_name={hotel.host_name}/>
           <hr />
-          <Description />
+          <Description description={hotel.description}/>
           <hr />
           <SleepingArrangement rooms={rooms} />
           <hr />

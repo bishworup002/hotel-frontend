@@ -1,5 +1,5 @@
 import React from 'react';
-import { CookingPotIcon, Tv, Forklift, WashingMachine, AlarmCheck, Wifi, Wind, Refrigerator, BellRing, LucideCloudRainWind, Umbrella } from 'lucide-react';
+import { CookingPotIcon, Tv,Weight, Forklift, WashingMachine, AlarmCheck, Wifi, Wind, Refrigerator, BellRing, LucideCloudRainWind, Umbrella } from 'lucide-react';
 
 const iconMap = {
   'Wi-Fi': Wifi,
@@ -14,6 +14,7 @@ const iconMap = {
   'Elevator': Forklift,
   'Dryer': LucideCloudRainWind,
   'Refrigerator': Refrigerator,
+  'Gym':Weight,
   'Smoke alarm': BellRing,
 };
 

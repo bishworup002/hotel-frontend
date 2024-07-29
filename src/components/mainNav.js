@@ -48,7 +48,6 @@ function MainNav({hotel}) {
   return (
     <div className="main-nav">
       <div>
-        {/* <h1>Comfy New Apt. in Pueblo Libre!</h1> */}
         <h1>{hotel.title}</h1>
       </div>
 

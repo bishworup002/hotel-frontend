@@ -42,12 +42,12 @@ To install the Hotel Booking Frontend, follow these steps:
 
 1. Clone the repository:
    ```
-   git clone https://github.com/yourusername/hotel-booking-frontend.git
+   git clone https://github.com/bishworup002/hotel-frontend.git
    ```
 
 2. Navigate to the project directory:
    ```
-   cd hotel-booking-frontend
+   cd hotel-frontend
    ```
 
 3. Install the dependencies:
