@@ -1,22 +1,18 @@
-import React, { useState, useEffect ,useRef} from 'react';
-import shareIcon from './image/share.png'; 
-import loveIcon from './image/love.png'; 
+import React, { useState, useEffect, useRef } from 'react';
+import { Share, Heart, X, Copy, Mail, MessageCircle, Facebook, Twitter, Code } from 'lucide-react';
 import hotelImage from './image/hotel1.jpg'; 
 
 function MainNav({hotel}) {
   const [isSaved, setIsSaved] = useState(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isAlertVisible, setIsAlertVisible] = useState(false);
   const alertRef = useRef(null);
 
-  // Load saved state from localStorage
   useEffect(() => {
     const savedState = localStorage.getItem('isSaved') === 'true';
     setIsSaved(savedState);
   }, []);
 
-  // Toggle save state and update localStorage
   const handleSaveToggle = () => {
     setIsSaved(prevState => {
       const newState = !prevState;
@@ -33,14 +29,13 @@ function MainNav({hotel}) {
     setIsModalOpen(false);
   };
 
-
   const handleCopyLinkClick = () => {
     navigator.clipboard.writeText(window.location.href)
       .then(() => {
         setIsAlertVisible(true);
         setTimeout(() => {
           setIsAlertVisible(false);
-        }, 1000); // Display alert for 1 second
+        }, 1000);
       })
       .catch((err) => console.error('Failed to copy: ', err));
   };
@@ -53,7 +48,7 @@ function MainNav({hotel}) {
 
       <div className="buttons-container">
         <button className="button1 btn-share" onClick={handleShareClick}>
-          <img src={shareIcon} alt="Share" className="icon" />
+          <Share size={20} />
           Share
         </button>
 
@@ -61,28 +56,29 @@ function MainNav({hotel}) {
           className={`button1 btn-save ${isSaved ? 'active' : ''}`}
           onClick={handleSaveToggle}
         >
-          <img src={loveIcon} alt="Save" className="icon" />
+          <Heart size={20} fill={isSaved ? 'currentColor' : 'none'} />
           <span style={{ marginBottom: '2px' }}>Save</span>
         </button>
       </div>
 
       {isModalOpen && (
-        // onClick={handleWindowClick}
-        <div id="shareModal" className="shareModal" >
+        <div id="shareModal" className="shareModal">
           <div className="shareModal-content">
             <div className="shareModal-header">
               <h2>Share this place</h2>
             </div>
-            <span className="close" onClick={handleCloseClick}>&times;</span>
+            <span className="close" onClick={handleCloseClick}>
+              <X size={24} />
+            </span>
 
             <div className="shareModal-body">
               <div className="place-info">
-                <img src={hotelImage} alt="Apartment" />
-                <p>{hotel.address} · ★New · 1 bedroom · {hotel.bedroom_count
-                } beds ·{hotel.bathroom_count} baths</p>
+                <img src={hotel.images[0]} alt="Apartment" />
+                <p>{hotel.address} · ★New · 1 bedroom · {hotel.bedroom_count} beds · {hotel.bathroom_count} baths</p>
               </div>
               <div className="share-options">
                 <div className="share-option" onClick={handleCopyLinkClick}>
+                  <Copy size={24} />
                   <p>Copy Link</p>
                 </div>
                 {isAlertVisible && (
@@ -92,21 +88,27 @@ function MainNav({hotel}) {
                   </div>
                 )}
                 <div className="share-option">
+                  <Mail size={24} />
                   <p>Email</p>
                 </div>
                 <div className="share-option">
+                  <MessageCircle size={24} />
                   <p>Messages</p>
                 </div>
                 <div className="share-option">
+                  <MessageCircle size={24} />
                   <p>Messenger</p>
                 </div>
                 <div className="share-option">
+                  <Facebook size={24} />
                   <p>Facebook</p>
                 </div>
                 <div className="share-option">
+                  <Twitter size={24} />
                   <p>Twitter</p>
                 </div>
                 <div className="share-option">
+                  <Code size={24} />
                   <p>Embed</p>
                 </div>
               </div>

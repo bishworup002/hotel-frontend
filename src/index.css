@@ -435,9 +435,7 @@ the end */
     /* margin-right: 5px; */
     margin-top: 10px;
   }
-  /* nav{
-    display: none;
-  } */
+  
 }
 
 /* main part */
@@ -1798,9 +1796,14 @@ footer li {
   }
   /* ******** */
   .search-bar {
-    flex-direction: column;
-    border-radius: 0;
-    box-shadow: none;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    padding: 0.2rem;
+    font-size: 10px;
+    color: #222;
+    cursor: pointer;
+    padding: 0 10px;
+    height: fit-content;
   }
 
   .search-inputs {
