@@ -18,9 +18,10 @@ import share from "./image/share.png";
 import love from "./image/love.png";
 
 
-function ImageGallery({images}) {
+function ImageGallery({hotel}) {
   const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 600);
   const [isSaved, setIsSaved] = useState(false);
+  const images = hotel?.images  ;
 
   const [modalOpen, setModalOpen] = useState(false);
   console.log("image gallery", images)
@@ -63,7 +64,7 @@ function ImageGallery({images}) {
               src={arrow}
               alt="Menu"
               className="mobile-image-icon"
-              // onClick={changeMobileImage} // React event handler
+            
             />
           </div>
 
@@ -85,7 +86,7 @@ function ImageGallery({images}) {
         </div>
       )}
 
-      {!isSmallScreen && <MainNav />}
+      {!isSmallScreen && <MainNav hotel={hotel} />}
 
       <div className="image-gallery">
         <div className="main-image">
@@ -103,7 +104,7 @@ function ImageGallery({images}) {
             <img src={images[3]} alt="image" />
           </div>
           <div className="small-image">
-            <img src={images[0]} alt="image" />
+            <img src={images[4]} alt="image" />
           </div>
         </div>
 
@@ -123,7 +124,8 @@ function ImageGallery({images}) {
           marginBottom: "-3rem",
         }}
       >
-        <h1>Comfy New Apt. in Pueblo Libre!</h1>
+        {/* <h1>Comfy New Apt. in Pueblo Libre!</h1> */}
+        <h1>{hotel.title}</h1>
       </div>
     </div>
   );

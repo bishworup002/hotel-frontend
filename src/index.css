@@ -15,7 +15,6 @@ code {
 
 /* ********************************************css******************************************** */
 
-
 * {
   margin: 0;
   padding: 0;
@@ -335,7 +334,7 @@ the end */
 .guest-info {
   flex-grow: 1;
 }
-.guest-type {
+.guest {
   font-weight: bold;
 }
 .guest-age {
@@ -838,6 +837,8 @@ hr {
   flex-direction: row;
 }
 
+/* ".sleeping-arrangement" */
+
 .bedroom-image {
   width: 40%;
   height: 100%;
@@ -866,6 +867,8 @@ hr {
     margin-bottom: 1rem;
   }
 }
+
+/* .end */
 
 .amenities-container {
   background-color: white;
@@ -1124,9 +1127,6 @@ select {
   padding: 48px 80px;
 }
 
-
-
-
 /* reviews */
 
 .reviews {
@@ -1196,7 +1196,7 @@ select {
 }
 
 .host-card-left h3 {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 .host-card-right b {
@@ -1317,9 +1317,6 @@ footer h3 {
 }
 
 .info-columns {
-  /* display: flex;
-  justify-content: space-between;
-  margin-bottom: 32px; */
   display: grid;
   grid-template-columns: auto auto auto;
   justify-content: space-between;
@@ -1436,12 +1433,7 @@ footer li {
 }
 
 
-
-
-
 /*************************************************************************************************************************** */
-
-
 
 .navbar-content {
   margin: 0 auto;
@@ -1449,6 +1441,7 @@ footer li {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
 }
 
 .logo {
@@ -1469,6 +1462,8 @@ footer li {
   
 }
 
+
+
 .search-bar button,
 .host-button,
 .globe-button,
@@ -1476,7 +1471,8 @@ footer li {
   padding: 8px 16px;
   font-size: 14px;
   font-weight: 600;
-  border-radius: 9999px;
+  border-radius: 99px;
+  margin: 1rem;
   transition: background-color 0.2s;
 }
 
@@ -1485,6 +1481,8 @@ footer li {
   justify-content: center;
   gap: 24px;
   margin-bottom: 16px;
+  margin-top: 10px;
+ 
 }
 
 .tabs button {
@@ -1540,7 +1538,7 @@ footer li {
 .modal {
   position: absolute;
   top: 20%;
-  left: 0;
+  left: 20%;
   right: 0;
   background-color: white;
   border-radius: 32px;
@@ -1548,12 +1546,13 @@ footer li {
   padding: 24px;
   margin-top: 12px;
   z-index: 99;
+  width: 50%;
 }
 
 .location-modal .region-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 6px;
 }
 
 .region-item {
@@ -1583,8 +1582,10 @@ footer li {
 
 .date-picker-header button {
   background: none;
-  border: none;
   font-size: 18px;
+  border: 1px solid #ddd;
+  border-radius: 32px;
+  background-color: white;
   cursor: pointer;
 }
 
@@ -1598,7 +1599,8 @@ footer li {
 .date-picker-tabs button {
   padding: 8px 16px;
   background: none;
-  border: none;
+  border: 10px;
+  border-radius: 32px;
   cursor: pointer;
 }
 
@@ -1669,11 +1671,12 @@ footer li {
   margin-top: 24px;
 }
 
-.date-range-options button {
+.date-picker-tabs button {
   padding: 8px 16px;
   border: 1px solid #ddd;
   border-radius: 32px;
   background-color: white;
+
   cursor: pointer;
 }
 
@@ -1687,6 +1690,7 @@ footer li {
   .date-picker {
     width: 100%;
     padding: 16px;
+    height: 80%;
   }
 
   .calendars-container {
@@ -1706,6 +1710,13 @@ footer li {
   .date-range-options button {
     flex: 1 0 calc(50% - 4px);
   }
+
+  .navbar-right{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    /* background-color: #008489; */
+  }
 }
 
 .date-range-options {
@@ -1716,7 +1727,7 @@ footer li {
 
 .date-range-options button {
   padding: 8px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #bcbbbb;
   border-radius: 32px;
   background-color: white;
   cursor: pointer;
@@ -1807,9 +1818,130 @@ footer li {
     right: 0;
     border-radius: 0;
     margin-top: 0;
+    width: 100%;
   }
 
   .location-modal .region-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+
+/* Custom styles for SleepingArrangement component */
+.sleeping-arrangement {
+  max-width: 80rem;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.sleeping-arrangement h2 {
+  font-size: 1.875rem;
+  font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 2rem;
+}
+
+.room-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+@media (min-width: 768px) {
+  .room-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (min-width: 1024px) {
+  .room-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.room-card {
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+.room-card:hover {
+  transform: scale(1.05);
+}
+
+.room-card img {
+  width: 100%;
+  height: 12rem;
+  object-fit: cover;
+}
+
+.room-card-content {
+  padding: 1rem;
+}
+
+.room-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+  margin-bottom: 0.5rem;
+}
+
+.room-card p {
+  font-size: 0.875rem;
+  color: #718096;
+}
+
+.scroll-container {
+  position: relative;
+}
+
+.scroll-wrapper {
+  display: flex;
+  overflow-x: auto;
+  /* space-x-6; */
+  padding-bottom: 1rem;
+}
+
+.scroll-wrapper > * {
+  margin-right: 1.5rem; /* Equivalent to `space-x-6` in Tailwind (1.5rem = 6 * 0.25rem) */
+}
+
+.scroll-wrapper > *:last-child {
+  margin-right: 0; /* Remove margin from the last child */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scroll-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 0.5rem;
+  border-radius: 9999px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06);
+  z-index: 10;
+  transition: opacity 0.3s ease-in-out;
+}
+.scroll-button:hover {
+  background-color: #f7fafc;
+}
+
+.scroll-button-left {
+  left: 0;
+}
+
+.scroll-button-right {
+  right: 0;
 }

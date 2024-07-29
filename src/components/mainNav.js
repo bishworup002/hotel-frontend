@@ -3,7 +3,7 @@ import shareIcon from './image/share.png';
 import loveIcon from './image/love.png'; 
 import hotelImage from './image/hotel1.jpg'; 
 
-function MainNav() {
+function MainNav({hotel}) {
   const [isSaved, setIsSaved] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -48,7 +48,8 @@ function MainNav() {
   return (
     <div className="main-nav">
       <div>
-        <h1>Comfy New Apt. in Pueblo Libre!</h1>
+        {/* <h1>Comfy New Apt. in Pueblo Libre!</h1> */}
+        <h1>{hotel.title}</h1>
       </div>
 
       <div className="buttons-container">
@@ -78,7 +79,8 @@ function MainNav() {
             <div className="shareModal-body">
               <div className="place-info">
                 <img src={hotelImage} alt="Apartment" />
-                <p>Rental unit in Lima · ★New · 1 bedroom · 1 bed · 1 bath</p>
+                <p>{hotel.address} · ★New · 1 bedroom · {hotel.bedroom_count
+                } beds ·{hotel.bathroom_count} baths</p>
               </div>
               <div className="share-options">
                 <div className="share-option" onClick={handleCopyLinkClick}>

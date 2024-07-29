@@ -5,7 +5,7 @@ import officeBagImage from './image/officeBag.png';
 import coHost1 from './image/co-host1.jpg';
 import coHost2 from './image/co-host2.jpg';
 
-function MeetHost() {
+function MeetHost({host_name,host_image}) {
   return (
     <section className="meet-host">
         <hr style={{ marginTop: '-5rem', marginBottom: '1rem' }} />
@@ -14,8 +14,8 @@ function MeetHost() {
         <div className="host-details">
           <div className="host-card">
             <div className="host-card-left">
-              <img src={hostPicture} alt="Fernando" className="host-image" />
-              <h3>Fernando</h3>
+              <img src={host_image} alt="Fernando" className="host-image" />
+              <h3>{host_name}</h3>
               <p className="superhost">Superhost</p>
             </div>
 

@@ -18,11 +18,12 @@ function ReviewsSection() {
   );
 }
 
-function LocationSection() {
+function LocationSection({address,latitude, longitude}) {
   return (
     <section className="location">
       <h2>Where you'll be</h2>
-      <p>Lima, Provincia de Lima, Peru</p>
+      {/* <p>Lima, Provincia de Lima, Peru</p> */}
+      <p>{address}</p>
       <div className="map-placeholder">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3901.2178242732994!2d-77.07632762133582!3d-12.097235199999988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9105c9cf6b6d3841%3A0x3aa344e9c0300300!2sGolden%20Mar%20Hotel!5e0!3m2!1sen!2sbd!4v1720597183352!5m2!1sen!2sbd"
@@ -39,12 +40,12 @@ function LocationSection() {
   );
 }
 
-function ReviewAndLocation() {
+function ReviewAndLocation({address,latitude, longitude}) {
   return (
     <div className="ReviewAndLocation">
       <ReviewsSection />
       <hr />
-      <LocationSection />
+      <LocationSection address={address} latitude={latitude} longitude={longitude}/>
       
     </div>
   );

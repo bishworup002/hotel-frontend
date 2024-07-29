@@ -1,10 +1,10 @@
 import React from 'react';
 
-function RentalInfo() {
+function RentalInfo({address,bathroom_count, bedroom_count,guest_count}) {
   return (
     <section className="rental-info">
-      <h3>Entire rental unit in Lima, Peru</h3>
-      <p>2 guests • 1 bedroom • 1 bed • 1 bath</p>
+      <h3>{address}</h3>
+      <p>{guest_count} guests • {bedroom_count} bedrooms •  1 bed • {bathroom_count} baths</p>
       <b><p>&#9733; New</p></b>
     </section>
   );

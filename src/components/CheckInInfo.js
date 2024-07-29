@@ -2,7 +2,7 @@ import React from 'react';
 import door from './image/door.png';
 import superHost from './image/superHost.png';
 
-function CheckInInfo() {
+function CheckInInfo({host_name}) {
   return (
     <section className="checkIn">
       <div className="checkInInner">
@@ -15,7 +15,7 @@ function CheckInInfo() {
       <div className="checkInInner">
         <img src={superHost} alt="Superhost" />
         <p>
-          <b>Fernando is a Superhost</b> <br />
+          <b>{host_name} is a Superhost</b> <br />
           Superhosts are experienced, highly rated Hosts
         </p>
       </div>

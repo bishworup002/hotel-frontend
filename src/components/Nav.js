@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Search, Globe, Menu, User } from "lucide-react";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import regional1 from "./image/regonal1.jpg";
 import regional2 from "./image/regonal2.webp";
 import regional3 from "./image/regonal3.webp";
 import regional4 from "./image/regonal4.webp";
 import regional5 from "./image/regonal5.webp";
 import regional6 from "./image/regonal6.webp";
-
 
 const EnhancedNavbar = () => {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -19,6 +20,11 @@ const EnhancedNavbar = () => {
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showGuestModal, setShowGuestModal] = useState(false);
   const navbarRef = useRef(null);
+
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+  const [rangeCheckIn, setRangeCheckIn] = useState("");
+  const [rangeCheckOut, setRangeCheckOut] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -38,6 +44,35 @@ const EnhancedNavbar = () => {
 
   const handleExpand = () => {
     setIsExpanded(!isExpanded);
+  };
+
+  const handleDateChange = (dates) => {
+    const [start, end] = dates;
+    setStartDate(start);
+    setEndDate(end);
+    setCheckIn(start ? start.toLocaleDateString() : "Add dates");
+    setCheckOut(end ? end.toLocaleDateString() : "Add dates");
+  };
+
+  const handleRangeChange = (days, isCheckIn) => {
+    if (isCheckIn) {
+      if (startDate) {
+        const rangeText = `${startDate.toLocaleDateString()} ±${days}`;
+        setRangeCheckIn(rangeText);
+        setCheckIn(rangeText);
+        if (endDate) {
+          const rangeText = `${endDate.toLocaleDateString()} ±${days}`;
+          setRangeCheckOut(rangeText);
+          setCheckOut(rangeText);
+        }
+      }
+    } else {
+      if (endDate) {
+        const rangeText = `${endDate.toLocaleDateString()} ±${days}`;
+        setRangeCheckOut(rangeText);
+        setCheckOut(rangeText);
+      }
+    }
   };
 
   return (
@@ -72,28 +107,46 @@ const EnhancedNavbar = () => {
             <div className="search-inputs">
               <div
                 className="search-input"
-                onClick={() => { setShowLocationModal(!showLocationModal) ;setShowDatePicker(false);setShowGuestModal(false);}}
+                onClick={() => {
+                  setShowLocationModal(!showLocationModal);
+                  setShowDatePicker(false);
+                  setShowGuestModal(false);
+                }}
               >
                 <div className="input-label">Where</div>
                 <div className="input-value">{where}</div>
               </div>
+
               <div
                 className="search-input"
-                onClick={() =>{ setShowLocationModal(false) ;setShowDatePicker(!showDatePicker);setShowGuestModal(false);}}
+                onClick={() => {
+                  setShowLocationModal(false);
+                  setShowDatePicker(!showDatePicker);
+                  setShowGuestModal(false);
+                }}
               >
                 <div className="input-label">Check in</div>
                 <div className="input-value">{checkIn}</div>
               </div>
+
               <div
                 className="search-input"
-                onClick={() => { setShowLocationModal(false) ;setShowDatePicker(!showDatePicker);setShowGuestModal(false);}}
+                onClick={() => {
+                  setShowLocationModal(false);
+                  setShowDatePicker(!showDatePicker);
+                  setShowGuestModal(false);
+                }}
               >
                 <div className="input-label">Check out</div>
                 <div className="input-value">{checkOut}</div>
               </div>
               <div
                 className="search-input"
-                onClick={() => { setShowLocationModal(false) ;setShowDatePicker(false);setShowGuestModal(!showGuestModal);}}
+                onClick={() => {
+                  setShowLocationModal(false);
+                  setShowDatePicker(false);
+                  setShowGuestModal(!showGuestModal);
+                }}
               >
                 <div className="input-label">Who</div>
                 <div className="input-value">{guests}</div>
@@ -106,7 +159,6 @@ const EnhancedNavbar = () => {
           </div>
         )}
         <div className="navbar-right">
-          <button className="host-button">Become a host</button>
           <button className="globe-button">
             <Globe size={20} />
           </button>
@@ -128,14 +180,44 @@ const EnhancedNavbar = () => {
       )}
 
       {showDatePicker && (
-        <DatePicker
-          onClose={() => setShowDatePicker(false)}
-          onSelect={(checkIn, checkOut) => {
-            setCheckIn(checkIn);
-            setCheckOut(checkOut);
-            setShowDatePicker(false);
-          }}
-        />
+        <div className="modal date-picker">
+          <div className="date-picker-header">
+            <div className="date-picker-tabs">
+              <button className="active">Dates</button>
+              <button>Months</button>
+              <button>Flexible</button>
+            </div>
+
+            <div>
+              <button onClick={() => setShowDatePicker(false)}>Close</button>
+            </div>
+          </div>
+          <div className="calendars-container">
+            <DatePicker
+              selected={startDate}
+              onChange={handleDateChange}
+              startDate={startDate}
+              endDate={endDate}
+              selectsRange
+              inline
+              monthsShown={2}
+            />
+          </div>
+          <div className="date-range-options">
+            <button
+              onClick={() => {
+                setRangeCheckIn("");
+                setRangeCheckOut("");
+              }}
+            >
+              Exact dates
+            </button>
+            <button onClick={() => handleRangeChange(1, true)}>± 1 day</button>
+            <button onClick={() => handleRangeChange(2, true)}>± 2 days</button>
+            <button onClick={() => handleRangeChange(3, true)}>± 3 days</button>
+            <button onClick={() => handleRangeChange(7, true)}>± 7 days</button>
+          </div>
+        </div>
       )}
 
       {showGuestModal && (
@@ -155,15 +237,23 @@ const LocationModal = ({ onClose, onSelect }) => {
   const regions = [
     { name: "I'm flexible", map: regional1 },
     { name: "Southeast Asia", map: regional2 },
-    { name: "Canada", map: regional3  },
-    { name: "Europe", map: regional5  },
-    { name: "Thailand", map: regional4  },
-    { name: "Middle East", map: regional6  },
+    { name: "Canada", map: regional3 },
+    { name: "Europe", map: regional5 },
+    { name: "Thailand", map: regional4 },
+    { name: "Middle East", map: regional6 },
   ];
 
   return (
     <div className="modal location-modal">
-      <h2>Search by region</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
+         
+          <h2>Search by region</h2>
+        </div>
+        <div>
+          <button onClick={() => onClose(false)}>Close</button>
+        </div>
+      </div>
       <div className="region-grid">
         {regions.map((region) => (
           <div
@@ -171,184 +261,10 @@ const LocationModal = ({ onClose, onSelect }) => {
             className="region-item"
             onClick={() => onSelect(region.name)}
           >
-            <img src={region.map} alt={region.name}  />
+            <img src={region.map} alt={region.name} />
             <span>{region.name}</span>
           </div>
         ))}
-      </div>
-    </div>
-  );
-};
-
-
-const DatePicker = ({ onClose, onSelect }) => {
-  const [selectedDates, setSelectedDates] = useState({
-    checkIn: null,
-    checkOut: null,
-  });
-  const [dateRange, setDateRange] = useState(0);
-  const [currentMonth, setCurrentMonth] = useState(new Date());
-
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const daysOfWeek = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-
-  const getDaysInMonth = (date) => {
-    const year = date.getFullYear();
-    const month = date.getMonth();
-    const days = new Date(year, month + 1, 0).getDate();
-    return Array.from({ length: days }, (_, i) => new Date(year, month, i + 1));
-  };
-
-  const addMonths = (date, months) => {
-    const newDate = new Date(date);
-    newDate.setMonth(newDate.getMonth() + months);
-    return newDate;
-  };
-
-  const handleDateClick = (date) => {
-    if (
-      !selectedDates.checkIn ||
-      (selectedDates.checkIn && selectedDates.checkOut)
-    ) {
-      setSelectedDates({ checkIn: date, checkOut: null });
-    } else {
-      setSelectedDates({ ...selectedDates, checkOut: date });
-      const checkInStr = selectedDates.checkIn.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-      const checkOutStr = date.toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
-      onSelect(`${checkInStr}`, `${checkOutStr}`);
-    }
-  };
-
-  const handleRangeClick = (days) => {
-    setDateRange(days);
-    const checkIn = new Date();
-    const checkInStr = checkIn.toLocaleDateString("en-US", {
-      month: "short",
-      day: "numeric",
-    });
-    onSelect(`${checkInStr}`, `±${days} days`);
-  };
-
-  const renderCalendar = (month) => {
-    const days = getDaysInMonth(month);
-    const firstDayOfMonth = days[0].getDay();
-    const leadingEmptyDays = Array(firstDayOfMonth).fill(null);
-
-    return (
-      <div className="calendar-month">
-        <h3>
-          {months[month.getMonth()]} {month.getFullYear()}
-        </h3>
-        <div className="calendar-weekdays">
-          {daysOfWeek.map((day) => (
-            <div key={day}>{day}</div>
-          ))}
-        </div>
-        <div className="calendar-days">
-          {leadingEmptyDays.map((_, index) => (
-            <div key={`empty-${index}`} className="calendar-day empty"></div>
-          ))}
-          {days.map((day) => (
-            <div
-              key={day.toISOString()}
-              className={`calendar-day ${
-                selectedDates.checkIn &&
-                day.toDateString() === selectedDates.checkIn.toDateString()
-                  ? "selected start"
-                  : ""
-              } ${
-                selectedDates.checkOut &&
-                day.toDateString() === selectedDates.checkOut.toDateString()
-                  ? "selected end"
-                  : ""
-              } ${
-                selectedDates.checkIn &&
-                selectedDates.checkOut &&
-                day > selectedDates.checkIn &&
-                day < selectedDates.checkOut
-                  ? "in-range"
-                  : ""
-              }`}
-              onClick={() => handleDateClick(day)}
-            >
-              {day.getDate()}
-            </div>
-          ))}
-        </div>
-      </div>
-    );
-  };
-
-  return (
-    <div className="modal date-picker">
-      <div className="date-picker-header">
-        <button onClick={() => setCurrentMonth(addMonths(currentMonth, -1))}>
-          ←
-        </button>
-        <div className="date-picker-tabs">
-          <button className="active">Dates</button>
-          <button>Months</button>
-          <button>Flexible</button>
-        </div>
-        <button onClick={() => setCurrentMonth(addMonths(currentMonth, 1))}>
-          →
-        </button>
-      </div>
-      <div className="calendars-container">
-        {renderCalendar(currentMonth)}
-        {renderCalendar(addMonths(currentMonth, 1))}
-      </div>
-      <div className="date-range-options">
-        <button
-          onClick={() => handleRangeClick(0)}
-          className={dateRange === 0 ? "active" : ""}
-        >
-          Exact dates
-        </button>
-        <button
-          onClick={() => handleRangeClick(1)}
-          className={dateRange === 1 ? "active" : ""}
-        >
-          ± 1 day
-        </button>
-        <button
-          onClick={() => handleRangeClick(2)}
-          className={dateRange === 2 ? "active" : ""}
-        >
-          ± 2 days
-        </button>
-        <button
-          onClick={() => handleRangeClick(3)}
-          className={dateRange === 3 ? "active" : ""}
-        >
-          ± 3 days
-        </button>
-        <button
-          onClick={() => handleRangeClick(7)}
-          className={dateRange === 7 ? "active" : ""}
-        >
-          ± 7 days
-        </button>
       </div>
     </div>
   );
@@ -382,7 +298,10 @@ const GuestModal = ({ onClose, onSelect }) => {
   return (
     <div className="modal guest-modal">
       <div className="guest-type">
-        <span>Adults</span>
+      <div class="guest-info">
+          <div class="guest">Adults</div>
+          <div class="guest-age">Ages 13 or above</div>
+        </div>
         <div className="guest-controls">
           <button
             onClick={() => handleDecrement("adults")}
@@ -395,7 +314,10 @@ const GuestModal = ({ onClose, onSelect }) => {
         </div>
       </div>
       <div className="guest-type">
-        <span>Children</span>
+      <div class="guest-info">
+          <div class="guest">Children</div>
+          <div class="guest-age">Ages 2 - 12</div>
+        </div>
         <div className="guest-controls">
           <button
             onClick={() => handleDecrement("children")}
@@ -408,7 +330,10 @@ const GuestModal = ({ onClose, onSelect }) => {
         </div>
       </div>
       <div className="guest-type">
-        <span>Infants</span>
+      <div class="guest-info">
+          <div class="guest">Infants</div>
+          <div class="guest-age">Under 2</div>
+        </div>
         <div className="guest-controls">
           <button
             onClick={() => handleDecrement("infants")}
@@ -421,7 +346,10 @@ const GuestModal = ({ onClose, onSelect }) => {
         </div>
       </div>
       <div className="guest-type">
-        <span>Pets</span>
+        <div class="guest-info">
+          <div class="guest">Pets</div>
+          <div class="pets-info">Bringing a service animal?</div>
+        </div>
         <div className="guest-controls">
           <button
             onClick={() => handleDecrement("pets")}
@@ -433,7 +361,8 @@ const GuestModal = ({ onClose, onSelect }) => {
           <button onClick={() => handleIncrement("pets")}>+</button>
         </div>
       </div>
-      <button onClick={handleSave}>Save</button>
+      <button style={{margin:"5px", fontSize:"15px"}} onClick={handleSave}>Save</button>
+      <button style={{margin:"5px", fontSize:"15px"}} onClick={() => onClose(false)}>Close</button>
     </div>
   );
 };

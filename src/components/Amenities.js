@@ -1,53 +1,44 @@
 import React from 'react';
-import { CookingPotIcon, Tv,Forklift,WashingMachine, AlarmCheck, Wifi, Wind, Refrigerator, BellRing,LucideCloudRainWind } from 'lucide-react';
+import { CookingPotIcon, Tv, Forklift, WashingMachine, AlarmCheck, Wifi, Wind, Refrigerator, BellRing, LucideCloudRainWind, Umbrella } from 'lucide-react';
 
-function Amenities() {
+const iconMap = {
+  'Wi-Fi': Wifi,
+  'WiFi': Wifi,
+  'Pool': Umbrella,
+  'Beach Access': Umbrella,
+  'Kitchen': CookingPotIcon,
+  'TV': Tv,
+  'Washer': WashingMachine,
+  'Hair dryer': Wind,
+  'Carbon monoxide alarm': AlarmCheck,
+  'Elevator': Forklift,
+  'Dryer': LucideCloudRainWind,
+  'Refrigerator': Refrigerator,
+  'Smoke alarm': BellRing,
+};
+
+function Amenities({ amenities }) {
+  const getIcon = (amenity) => {
+    const Icon = iconMap[amenity] || CookingPotIcon; // Default to CookingPotIcon if no match
+    return <Icon className="icon" />;
+  };
+
   return (
     <section className="amenities-container">
-      <h2>What this place offers</h2>
-      <ul className="amenities-list">
-        <li>
-          <CookingPotIcon className="icon" />
-          Kitchen
-        </li>
-        <li>
-          <Tv className="icon" />
-          TV
-        </li>
-        <li>
-          <WashingMachine className="icon" />
-          Washer
-        </li>
-        <li>
-          <Wind className="icon" />
-          Hair dryer
-        </li>
-        <li className="disabled1">
-          <AlarmCheck className="icon" />
-          Carbon monoxide alarm
-        </li>
-        <li>
-          <Wifi className="icon" />
-          Wifi
-        </li>
-        <li>
-          <Forklift className="icon" />
-          Elevator
-        </li>
-        <li>
-          <LucideCloudRainWind className="icon" />
-          Dryer
-        </li>
-        <li>
-          <Refrigerator className="icon" />
-          Refrigerator
-        </li>
-        <li className="disabled1">
-          <BellRing className="icon" />
-          Smoke alarm
-        </li>
+      <h2 className="text-2xl font-bold mb-4">What this place offers</h2>
+      <ul className="amenities-list grid grid-cols-1 md:grid-cols-2 gap-4">
+        {amenities.map((amenity, index) => (
+          <li key={index} className="flex items-center space-x-2">
+            {getIcon(amenity)}
+            <span>{amenity}</span>
+          </li>
+        ))}
       </ul>
-      <button>Show all 32 amenities</button>
+      {amenities.length > 10 && (
+        <button className="mt-4 bg-white text-black border border-black rounded-lg px-4 py-2 hover:bg-gray-100 transition-colors">
+          Show all {amenities.length} amenities
+        </button>
+      )}
     </section>
   );
 }

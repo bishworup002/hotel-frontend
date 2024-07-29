@@ -11,21 +11,23 @@ import Footer from "./Footer";
 import LeftColumn from "./LeftColumn";
 import RightColumn from "./RightColumn";
 import EnhancedNavbar from "./Nav";
-import RentalInfo from './RentalInfo';
-import HostInfo from './HostInfo';
-import CheckInInfo from './CheckInInfo';
-import Description from './Description';
-import SleepingArrangement from './SleepingArrangement';
-import Amenities from './Amenities';
-import Calendar from './Calendar';
+import RentalInfo from "./RentalInfo";
+import HostInfo from "./HostInfo";
+import CheckInInfo from "./CheckInInfo";
+import Description from "./Description";
+import SleepingArrangement from "./SleepingArrangement";
+import Amenities from "./Amenities";
+import Calendar from "./Calendar";
 
 const HotelDetails = () => {
   const [hotel, setHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
+   
 
   useEffect(() => {
+
     const fetchHotelData = async () => {
       if (!slug) {
         console.error("Slug is undefined");
@@ -42,35 +44,37 @@ const HotelDetails = () => {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
+        console.log("slug1=", slug);
         data.images = data.images.map((img) => `${config.API_BASE_URL}${img}`);
         data.host_image = `${config.API_BASE_URL}${data.host_image}`;
-        setHotel(data);
-        console.log("Data =", hotel.images);
-        console.log("Data =", hotel);
+         setHotel({...data});
+         console.log("Data  =", data);
+
+         console.log(" hotel =", hotel);
 
         const roomsResponse = await fetch(
           `${config.API_BASE_URL}/api/hotel/${slug}/rooms`
         );
+        console.log("slug2=", slug);
 
         if (!roomsResponse.ok) {
           throw new Error(`HTTP error! status: ${roomsResponse.status}`);
         }
 
         const roomsData = await roomsResponse.json();
+        console.log("===========roomData=========== =", roomsData);
 
         roomsData.forEach((room) => {
           room.room_image = `${config.API_BASE_URL}${room.room_image}`;
         });
 
-        setRooms(roomsData);
-        console.log("roomData =",rooms);
-
+        setRooms([...roomsData]);
+        console.log("roomData =", rooms);
       } catch (error) {
         console.error("Error fetching hotel data:", error);
       } finally {
         setLoading(false);
       }
-
     };
 
     fetchHotelData();
@@ -89,30 +93,31 @@ const HotelDetails = () => {
       <AppBanner />
       {/* <Navbar /> */}
       <EnhancedNavbar />
-      <ImageGallery images={hotel.images} />
+      <ImageGallery  hotel={hotel} />
 
       <div className="content-wrapper">
-        {/* <LeftColumn /> */}
+       
         <div className="left-column">
-          <RentalInfo />
+          <RentalInfo address={hotel.address} bathroom_count={hotel.bathroom_count} bedroom_count={hotel.bedroom_count} guest_count={hotel.guest_count}
+          />
           <hr />
-          <HostInfo />
+          <HostInfo host_name={hotel.host_name} host_image={hotel.host_image} />
           <hr />
-          <CheckInInfo />
+          <CheckInInfo host_name={hotel.host_name}/>
           <hr />
           <Description />
           <hr />
-          <SleepingArrangement rooms={rooms}/>
+          <SleepingArrangement rooms={rooms} />
           <hr />
-          <Amenities />
+          <Amenities amenities={hotel.amenities} />
           <hr />
           <Calendar />
         </div>
-        <RightColumn />
+        <RightColumn  />
       </div>
 
-      <ReviewAndLocation />
-      <MeetHost />
+      <ReviewAndLocation address={hotel.address} latitude={hotel.latitude} longitude={hotel.longitude} />
+      <MeetHost host_name={hotel.host_name} host_image={hotel.host_image}/>
       <Footer />
     </div>
   );
