@@ -2,14 +2,11 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import config from "../config.json";
 import { Image, Shimmer } from "react-shimmer";
-import Navbar from "./Navbar";
 import AppBanner from "./AppBanner";
 import ImageGallery from "./imageGallery";
 import ReviewAndLocation from "./ReviewAndLocation";
 import MeetHost from "./MeetHost";
 import Footer from "./Footer";
-import LeftColumn from "./LeftColumn";
-import RightColumn from "./RightColumn";
 import EnhancedNavbar from "./Nav";
 import RentalInfo from "./RentalInfo";
 import HostInfo from "./HostInfo";
@@ -18,16 +15,15 @@ import Description from "./Description";
 import SleepingArrangement from "./SleepingArrangement";
 import Amenities from "./Amenities";
 import Calendar from "./Calendar";
+import RightColumn from "./RightColumn";
 
 const HotelDetails = () => {
   const [hotel, setHotel] = useState(null);
   const [rooms, setRooms] = useState([]);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
-   
 
   useEffect(() => {
-
     const fetchHotelData = async () => {
       if (!slug) {
         console.error("Slug is undefined");
@@ -39,37 +35,25 @@ const HotelDetails = () => {
         const response = await fetch(
           `${config.API_BASE_URL}/api/hotel/${slug}`
         );
-        console.log("slug=", slug);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
-        console.log("slug1=", slug);
         data.images = data.images.map((img) => `${config.API_BASE_URL}${img}`);
         data.host_image = `${config.API_BASE_URL}${data.host_image}`;
-         setHotel({...data});
-         console.log("Data  =", data);
-
-         console.log(" hotel =", hotel);
+        setHotel({...data});
 
         const roomsResponse = await fetch(
           `${config.API_BASE_URL}/api/hotel/${slug}/rooms`
         );
-        console.log("slug2=", slug);
-
         if (!roomsResponse.ok) {
           throw new Error(`HTTP error! status: ${roomsResponse.status}`);
         }
-
         const roomsData = await roomsResponse.json();
-        console.log("===========roomData=========== =", roomsData);
-
         roomsData.forEach((room) => {
           room.room_image = `${config.API_BASE_URL}${room.room_image}`;
         });
-
         setRooms([...roomsData]);
-        console.log("roomData =", rooms);
       } catch (error) {
         console.error("Error fetching hotel data:", error);
       } finally {
@@ -81,7 +65,29 @@ const HotelDetails = () => {
   }, [slug]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="hotel-details-loading">
+        <AppBanner />
+        <EnhancedNavbar />
+        <Shimmer width={800} height={400} className="image-gallery-shimmer" />
+        <div className="content-wrapper">
+          <div className="left-column">
+            <Shimmer width={600} height={100} className="rental-info-shimmer" />
+            <Shimmer width={600} height={100} className="host-info-shimmer" />
+            <Shimmer width={600} height={200} className="description-shimmer" />
+            <Shimmer width={600} height={150} className="sleeping-arrangement-shimmer" />
+            <Shimmer width={600} height={100} className="amenities-shimmer" />
+            <Shimmer width={600} height={200} className="calendar-shimmer" />
+          </div>
+          <div className="right-column">
+            <Shimmer width={300} height={400} className="right-column-shimmer" />
+          </div>
+        </div>
+        <Shimmer width={800} height={200} className="review-location-shimmer" />
+        <Shimmer width={800} height={150} className="meet-host-shimmer" />
+        <Footer />
+      </div>
+    );
   }
 
   if (!hotel) {
@@ -91,15 +97,12 @@ const HotelDetails = () => {
   return (
     <div className="hotel-details">
       <AppBanner />
-      {/* <Navbar /> */}
       <EnhancedNavbar />
-      <ImageGallery  hotel={hotel} />
+      <ImageGallery hotel={hotel} />
 
       <div className="content-wrapper">
-       
         <div className="left-column">
-          <RentalInfo address={hotel.address} bathroom_count={hotel.bathroom_count} bedroom_count={hotel.bedroom_count} guest_count={hotel.guest_count}
-          />
+          <RentalInfo address={hotel.address} bathroom_count={hotel.bathroom_count} bedroom_count={hotel.bedroom_count} guest_count={hotel.guest_count} />
           <hr />
           <HostInfo host_name={hotel.host_name} host_image={hotel.host_image} />
           <hr />
@@ -113,7 +116,7 @@ const HotelDetails = () => {
           <hr />
           <Calendar />
         </div>
-        <RightColumn  />
+        <RightColumn />
       </div>
 
       <ReviewAndLocation address={hotel.address} latitude={hotel.latitude} longitude={hotel.longitude} />

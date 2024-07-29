@@ -24,7 +24,7 @@ function ImageGallery({hotel}) {
   const images = hotel?.images  ;
 
   const [modalOpen, setModalOpen] = useState(false);
-  console.log("image gallery", images)
+  // console.log("image gallery", images)
 
   const openModalImage = () => {
     setModalOpen(true);

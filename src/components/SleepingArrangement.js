@@ -19,8 +19,6 @@ const RoomCard = ({ room }) => (
 const SleepingArrangement = ({ rooms }) => {
   const scrollRef = React.useRef(null);
 
-     console.log(rooms);
-
   const scroll = (scrollOffset) => {
     if (scrollRef.current) {
       scrollRef.current.scrollLeft += scrollOffset;
