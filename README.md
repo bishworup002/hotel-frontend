@@ -1,7 +1,7 @@
 # Hotel Booking Frontend
 
 This is a React.js frontend application for the Hotel Booking system. It provides a user interface for viewing hotel details and  room information.
-
+## [**Backed Link🔗**](https://github.com/bishworup002/hotel-backend)
 ## Table of Contents
 
 1. [Features](#features)
@@ -122,7 +122,42 @@ hotel-booking-frontend/
 ├── package.json
 └── README.md
 ```
+## Screenshots
 
+### Homepage
+
+<img src="./public/Screenshots/image1.png" alt="Image" width="600">
+<img src="./public/Screenshots/image2.png" alt="Image" width="600">
+
+### Search Modal
+<img src="./public/Screenshots/image3.png" alt="Image" width="600">
+<img src="./public/Screenshots/image4.png" alt="Image" width="600">
+<img src="./public/Screenshots/image5.png" alt="Image" width="600">
+
+#### Share Modal
+
+<img src="./public/Screenshots/image6.png" alt="Image" width="600">
+
+#### All Image View
+
+<img src="./public/Screenshots/image7.png" alt="Image" width="600">
+
+#### Hotel Details
+
+<img src="./public/Screenshots/image8.png" alt="Image" width="600">
+
+#### Host Information
+
+<img src="./public/Screenshots/image9.png" alt="Image" width="600">
+
+#### Footer
+
+<img src="./public/Screenshots/image10.png" alt="Image" width="600">
+
+
+## Additional Information
+
+For any questions or issues, feel free to open an issue in the repository.
 ## Components
 
 The application is composed of several React components:
